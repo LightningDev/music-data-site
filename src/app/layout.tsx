@@ -2,6 +2,7 @@ import { Providers } from "@/lib/providers";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { headers } from 'next/headers';
 import AuthProvider from "@/context/authProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -16,11 +17,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const pathname = headers().get('x-next-pathname') as string;
+
   return (
     <Providers>
       <html lang="en">
         <body className={inter.className}>
-          <AuthProvider>{children}</AuthProvider>
+          <AuthProvider route={pathname}>{children}</AuthProvider>
         </body>
       </html>
     </Providers>

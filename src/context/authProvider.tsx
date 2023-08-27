@@ -1,13 +1,21 @@
-'use client'
+"use client";
+import RegisterPage from "@/app/auth/register/page";
 import SignInPage from "@/app/auth/signin/page";
 import { selectAuthenticated } from "@/lib/redux";
 import { useSelector } from "react-redux";
+import { redirect } from "next/navigation";
 
-export default function AuthProvider(props: React.PropsWithChildren) {
-  const authenticated = useSelector(selectAuthenticated)
-  
-  if (!authenticated)
-    return <SignInPage />
+export default function AuthProvider({
+  children,
+  route,
+}: {
+  children: React.ReactNode;
+  route: string;
+}) {
+  const authenticated = useSelector(selectAuthenticated);
 
-  return <>{props.children}</>
+  if (!authenticated && !route.includes("/auth")) redirect("/auth/signin");
+  if (authenticated && route.includes("/auth")) redirect("/");
+
+  return <>{children}</>;
 }
