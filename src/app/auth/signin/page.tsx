@@ -1,5 +1,7 @@
 'use client'
+import { setAuthenticated, useDispatch } from "@/lib/redux";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 
@@ -18,6 +20,8 @@ export default function SignInPage() {
     error: false,
     message: "",
   });
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     console.log(formData)
@@ -37,6 +41,8 @@ export default function SignInPage() {
           error: false,
           message: "Sign in successfully!",
         });
+        dispatch(setAuthenticated(true));
+        router.push("/");
       } else {
         setMessage({
           error: true,

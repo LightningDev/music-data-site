@@ -1,4 +1,5 @@
 "use client";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import countriesData from "public/countries.json";
 import { useState } from "react";
@@ -22,6 +23,7 @@ export default function RegisterPage() {
     error: false,
     message: "",
   });
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     try {
@@ -38,8 +40,9 @@ export default function RegisterPage() {
       if (data.success) {
         setMessage({
           error: false,
-          message: "Registration successful! You can now login.",
+          message: "Registration successful! Redirecting to sign-in in a few seconds...",
         });
+        router.push("/auth/signin");
       } else {
         setMessage({
           error: true,
@@ -47,6 +50,7 @@ export default function RegisterPage() {
         });
       }
     } catch (error) {
+      console.log(error);
       setMessage({
         error: true,
         message: "There was an error during registration. Please try again.",
