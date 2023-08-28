@@ -1,3 +1,6 @@
 import type { ReduxState } from "../..";
 
-export const selectAuthenticated = (state: ReduxState) => state.authentication.authenticated
+const selectUserId = (state: ReduxState) => state.authentication.userId;
+const selectJwtToken = (state: ReduxState) => state.authentication.jwtToken;
+
+export { selectUserId, selectJwtToken };

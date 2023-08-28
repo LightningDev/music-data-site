@@ -23,7 +23,7 @@ export default function RegisterPage() {
     error: false,
     message: "",
   });
-  const router = useRouter()
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
     try {
@@ -40,7 +40,8 @@ export default function RegisterPage() {
       if (data.success) {
         setMessage({
           error: false,
-          message: "Registration successful! Redirecting to sign-in in a few seconds...",
+          message:
+            "Registration successful! Redirecting to sign-in in a few seconds...",
         });
         router.push("/auth/signin");
       } else {
@@ -50,7 +51,6 @@ export default function RegisterPage() {
         });
       }
     } catch (error) {
-      console.log(error);
       setMessage({
         error: true,
         message: "There was an error during registration. Please try again.",

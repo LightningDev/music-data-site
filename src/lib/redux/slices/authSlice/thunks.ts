@@ -1,3 +1,3 @@
 import { authSlice } from ".";
 
-export const { setAuthenticated } = authSlice.actions;
+export const { setUserId, setJwtToken } = authSlice.actions;

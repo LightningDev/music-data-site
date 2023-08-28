@@ -1,5 +1,5 @@
-'use client'
-import { setAuthenticated, useDispatch } from "@/lib/redux";
+"use client";
+import { setUserId, useDispatch } from "@/lib/redux";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -24,7 +24,6 @@ export default function SignInPage() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<Inputs> = async (formData) => {
-    console.log(formData)
     try {
       const response = await fetch("/api/auth/signin", {
         method: "POST",
@@ -41,7 +40,7 @@ export default function SignInPage() {
           error: false,
           message: "Sign in successfully!",
         });
-        dispatch(setAuthenticated(true));
+        dispatch(setUserId(data.id));
         router.push("/");
       } else {
         setMessage({
