@@ -12,7 +12,7 @@ An application built using Next.js, Express.js, and PostgreSQL, showcasing top a
 
 ## Prerequisites
 
-- Next.js 13
+- [Next.js 13](https://nextjs.org/docs/getting-started/installation)
 
 ## Installation & Setup
 
