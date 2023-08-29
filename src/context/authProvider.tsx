@@ -1,6 +1,5 @@
 "use client";
-import { setJwtToken, selectJwtToken, useDispatch } from "@/lib/redux";
-import { useSelector } from "react-redux";
+import { setJwtToken, useDispatch } from "@/lib/redux";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 

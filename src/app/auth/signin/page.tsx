@@ -1,5 +1,5 @@
 "use client";
-import { setUserId, useDispatch } from "@/lib/redux";
+import { setUserId, setJwtToken, useDispatch } from "@/lib/redux";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -11,11 +11,7 @@ type Inputs = {
 };
 
 export default function SignInPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<Inputs>();
+  const { register, handleSubmit } = useForm<Inputs>();
   const [message, setMessage] = useState({
     error: false,
     message: "",
@@ -41,7 +37,7 @@ export default function SignInPage() {
           message: "Sign in successfully!",
         });
         dispatch(setUserId(data.id));
-        router.push("/");
+        router.replace("/");
       } else {
         setMessage({
           error: true,
