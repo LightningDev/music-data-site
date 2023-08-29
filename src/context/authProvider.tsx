@@ -1,5 +1,10 @@
 "use client";
-import { setJwtToken, useDispatch } from "@/lib/redux";
+import {
+  selectJwtToken,
+  setJwtToken,
+  useDispatch,
+  useSelector,
+} from "@/lib/redux";
 import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
@@ -13,13 +18,22 @@ export default function AuthProvider({
   jwtToken?: string;
 }) {
   const dispatch = useDispatch();
+  const jwtTokenFromStore = useSelector(selectJwtToken);
 
   useEffect(() => {
-    if (jwtToken) dispatch(setJwtToken(jwtToken));
-  });
+    if (
+      jwtToken !== undefined &&
+      jwtToken !== "" &&
+      jwtToken !== jwtTokenFromStore
+    )
+      dispatch(setJwtToken(jwtToken));
+  }, []);
 
   if (jwtToken === undefined && !route.includes("/auth"))
     redirect("/auth/signin");
+
+  if (jwtToken !== undefined && jwtToken !== "" && route.includes("/auth"))
+    redirect("/");
 
   return <>{children}</>;
 }

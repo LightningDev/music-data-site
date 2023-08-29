@@ -1,44 +1,68 @@
+"use client";
 import AlbumnCard from "@/app/components/music/AlbumnCard";
+import { selectJwtToken, useSelector } from "@/lib/redux";
+import { useState, useEffect } from "react";
 
-const albumsData = [
-  {
-    id: 1,
-    title: "Album 1",
-    coverArtURL:
-      "https://upload.wikimedia.org/wikipedia/en/7/77/Maroon_5_-_Overexposed.png",
-    artist: "Artist Name 1",
-  },
-  {
-    id: 1,
-    title: "Album 1",
-    coverArtURL:
-      "https://upload.wikimedia.org/wikipedia/en/7/77/Maroon_5_-_Overexposed.png",
-    artist: "Artist Name 1",
-  },
-  {
-    id: 1,
-    title: "Album 1",
-    coverArtURL:
-      "https://upload.wikimedia.org/wikipedia/en/7/77/Maroon_5_-_Overexposed.png",
-    artist: "Artist Name 1",
-  },
-];
+type Albumn = {
+  id: number;
+  name: string;
+  label: string;
+  cover: string;
+  releaseDate: string;
+  artistName: string;
+  artistId: number;
+};
 
 export default function ArtistDetailPage({
   params,
 }: {
-  params: { slug: string };
+  params: { id: string };
 }) {
+  const jwtToken = useSelector(selectJwtToken);
+  const [albumns, setAlbumns] = useState<Albumn[] | []>([]);
+
+  useEffect(() => {
+    if (jwtToken)
+      (async () => {
+        await fetchAlbumn();
+      })();
+  }, [jwtToken]);
+
+  const fetchAlbumn = async () => {
+    try {
+      const response = await fetch(`/api/music/albumns?artist=${params.id}`, {
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${jwtToken}`,
+        },
+      });
+
+      const data = await response.json();
+
+      setAlbumns(data.albumns);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <div className="p-4">
-      <h1 className="text-xl mb-4">Albums</h1>
+    <div className="p-4 w-full">
+      <h1 className="text-xl mb-4">Latest Albumns</h1>
+      {albumns.length === 0 && (
+        <div className="flex justify-center items-center h-60">
+          {" "}
+          <span className="loading loading-infinity loading-lg"></span>
+        </div>
+      )}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-        {albumsData.map((album) => (
+        {albumns?.map((album) => (
           <AlbumnCard
             key={album.id}
-            title={album.title}
-            coverArtURL={album.coverArtURL}
-            artist={album.artist}
+            id={album.id}
+            title={album.name}
+            coverArtURL={album.cover}
+            artistName={album.artistName}
+            label={album.label}
           />
         ))}
       </div>

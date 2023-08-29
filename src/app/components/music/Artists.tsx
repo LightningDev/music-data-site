@@ -32,7 +32,6 @@ export default function Artists() {
 
   const fetchArtists = async () => {
     try {
-      console.log(jwtToken);
       const response = await fetch("/api/music/artist?top=25", {
         method: "GET",
         headers: {
@@ -53,34 +52,54 @@ export default function Artists() {
       className="w-[50%] mt-12 p-6 bg-white rounded-lg shadow-md"
       style={{ height: "80vh" }}
     >
-      <h2 className="text-2xl font-bold mb-4">Top 10 Artists</h2>
-      <table className="table w-full mb-4">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Rating</th>
-            <th className="w-[10%]"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentArtists?.length > 0 &&
-            currentArtists.map((artist) => (
-              <tr key={artist.id}>
-                <td className="font-bold">{artist.name}</td>
-                <td>{artist.rating}</td>
-                <td>
-                  <button className="btn btn-ghost btn-xs">Albums</button>
-                </td>
+      <h2 className="text-2xl font-bold mb-4">Top 25 Artists</h2>
+      {artists.length === 0 ? (
+        <div className="flex justify-center items-center h-60">
+          {" "}
+          <span className="loading loading-infinity loading-lg"></span>
+        </div>
+      ) : (
+        <>
+          <table className="table w-full mb-4">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Name</th>
+                <th>Rating</th>
+                <th className="w-[10%]"></th>
               </tr>
-            ))}
-        </tbody>
-      </table>
-      <Pagination
-        postsPerPage={postsPerPage}
-        totalPosts={artists?.length || 0}
-        paginate={paginate}
-        currentPage={currentPage}
-      />
+            </thead>
+            <tbody>
+              {currentArtists?.length > 0 &&
+                currentArtists.map((artist, index) => (
+                  <tr key={artist.id}>
+                    <td>
+                      {currentPage > 1
+                        ? index + 1 + (currentPage - 1) * postsPerPage
+                        : index + 1}
+                    </td>
+                    <td className="font-bold">{artist.name}</td>
+                    <td>{artist.rating}</td>
+                    <td>
+                      <a
+                        href={`/music/artists/${artist.id}`}
+                        className="btn btn-ghost btn-xs"
+                      >
+                        Albums
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
+          <Pagination
+            postsPerPage={postsPerPage}
+            totalPosts={artists?.length || 0}
+            paginate={paginate}
+            currentPage={currentPage}
+          />
+        </>
+      )}
     </div>
   );
 }
