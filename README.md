@@ -8,7 +8,7 @@ An application built using Next.js, Express.js, and PostgreSQL, showcasing top a
 - Display top 25 artists.
 - Show a list of albums per artist.
 - Display song lyrics, handling special characters like '\n' for a better user experience.
-- Responsive design with a beautiful UI inspired by Apple Music.
+- Responsive design with a modern UI.
 
 ## Prerequisites
 
