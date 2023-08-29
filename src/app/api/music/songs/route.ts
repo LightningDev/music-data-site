@@ -14,7 +14,6 @@ export async function GET(req: Request) {
         },
       }
     );
-    console.log(serverRes);
     const data = await serverRes.json();
 
     return new NextResponse(JSON.stringify(data), {

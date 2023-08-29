@@ -37,6 +37,7 @@ export default function SignInPage() {
           message: "Sign in successfully!",
         });
         dispatch(setUserId(data.id));
+        dispatch(setJwtToken(data.token));
         router.replace("/");
       } else {
         setMessage({

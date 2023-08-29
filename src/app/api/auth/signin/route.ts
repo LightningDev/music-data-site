@@ -10,14 +10,13 @@ export async function POST(req: Request) {
       },
       body: JSON.stringify(payload),
     });
-    const data = await serverRes.json();
 
+    const data = await serverRes.json();
     return new NextResponse(JSON.stringify(data), {
       headers: serverRes.headers,
       status: serverRes.status,
     });
   } catch (error) {
-    console.log(error)
     const err = { success: false, message: "Internal Server Error" };
 
     return new NextResponse(JSON.stringify(err), {

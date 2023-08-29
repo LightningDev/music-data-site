@@ -14,8 +14,8 @@ export async function GET(req: Request) {
         },
       }
     );
+
     const data = await serverRes.json();
-    console.log(data);
     return new NextResponse(JSON.stringify(data), {
       status: serverRes.status,
     });
