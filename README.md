@@ -2,6 +2,9 @@
 
 An application built using Next.js, Express.js, and PostgreSQL, showcasing top artists, albums, and song lyrics from Musixmatch API.
 
+## Backend
+For the backend project, please follow this [link](https://github.com/LightningDev/music-data-server).
+
 ## Features
 
 - User authentication using JWT.
